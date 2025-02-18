@@ -6,7 +6,7 @@ for file in *; do
     if [[ -f "$file" ]]; then
         # Print the file name and its size in bytes
         size=$(ls -l "$file" | awk '{print $5}')
-        echo "$file: $size"
+        echo "$file: $size octets"
     fi
 done
 
@@ -20,6 +20,8 @@ if [ $# -eq 0 ]; then
 fi
 
 for arg in "$@"; do
-    echo "Running hyperfine with argument: $arg"
-    hyperfine "./main $arg" 
+    echo "hyperfine --warmup 100 node ./main.js ...args"
+    hyperfine --warmup 100 "node ./main.js $arg" 
+    echo "hyperfine --warmup 100 ./main ...args"
+    hyperfine --warmup 100 "./main $arg" 
 done
