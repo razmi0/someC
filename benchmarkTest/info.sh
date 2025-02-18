@@ -12,5 +12,14 @@ done
 
 # benchmark
 
-hyperfine ./main
+echo "Number of perfs measure: $#"
 
+if [ $# -eq 0 ]; then
+    echo "No arguments provided!"
+    exit 1
+fi
+
+for arg in "$@"; do
+    echo "Running hyperfine with argument: $arg"
+    hyperfine "./main $arg" 
+done
